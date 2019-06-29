@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "@lib/*": ["src/@lib/*"],
+      "@core/*": ["src/@core/*"],
+      "@webapps/*": ["src/@webapps/*"],
+      "@schemas": ["src/@schemas"],
+      "~src/*": ["src/*"]
+    },
+    "incremental": true
+  },
+  "exclude": ["node_modules"]
+}
