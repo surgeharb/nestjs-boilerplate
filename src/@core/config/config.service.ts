@@ -28,7 +28,7 @@ export class ConfigService {
     this.envConfig = dotenv.config({ path: ENV_PATH }).parsed || {};
 
     // Development Local Computer Testing -> Connection to Dev Database
-    if (process.env.DEV_DBHOST && process.env.DEV_DBHOST !== 'undefined' && process.env.NODE_ENV === 'development') {
+    if (process.env.DEV_DBHOST && process.env.DEV_DBHOST !== 'undefined') {
       this.envConfig.MONGODB_URI = this.envConfig.MONGODB_URI.replace('localhost', envConfig.DEV_DBHOST);
     }
   }

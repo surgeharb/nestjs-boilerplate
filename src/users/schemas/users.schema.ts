@@ -6,8 +6,13 @@ export const UsersSchema = new Schema({
   email: { type: String },
 
   // Private Fields
-  tokenCode: { type: String, select: false },
+  tokenCodes: { type: Array, select: false, default: [] },
   password: { type: String, select: false },
   salt: { type: String, select: false },
+
+  // Timestamps
+  updatedAt: { type: Date, select: false },
+  createdAt: { type: Date, select: false },
+  __v: { type: Number, select: false },
 
 }, { timestamps: true });

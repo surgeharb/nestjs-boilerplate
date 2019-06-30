@@ -1,8 +1,10 @@
-import { Controller, Post, UseInterceptors, UploadedFiles, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
-import { throwServerError } from '@core/utils/error.handler';
-import to from 'await-to-js';
+
+const UPLOAD_FIELDS = [
+  { name: 'chat', maxCount: 1 },
+];
 
 @Controller()
 export class UploadController {
@@ -12,14 +14,9 @@ export class UploadController {
   ) {}
 
   @Post()
-  @HttpCode(HttpStatus.OK)
-  @UseInterceptors(FileFieldsInterceptor([
-    { name: 'chat', maxCount: 1 },
-  ]))
+  @UseInterceptors(FileFieldsInterceptor(UPLOAD_FIELDS))
   async uploadFile(@UploadedFiles() files: any) {
-    const [error, result] = await to(this.uploadService.handleUploads(files));
-    if (error) { return throwServerError(error); }
-    return result;
+    return this.uploadService.handleUploads(files);
   }
 
 }
