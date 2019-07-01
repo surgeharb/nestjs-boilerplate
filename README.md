@@ -16,7 +16,7 @@
 ### Development Watch Run
 
 - Create .env file `cp .env-sample.env .env` and set `NODE_ENV=development`
-- Install dependencies `npm install`
+- Install dependencies: `npm install`
 - Start the app `nodemon` (app will be exposed through the port 3000)
 - Feel free to change the port in config/env/development.env
 
@@ -24,9 +24,9 @@
 
 - Create .env file `echo NODE_ENV=production > .env`
 - Change the port number in config/env/production.env
-- Install [PM2](http://pm2.keymetrics.io/) `npm install pm2 -g`
-- Install dependencies and `npm run create:api`
-- Watch Logs using `pm2 logs api`
+- Install [PM2](http://pm2.keymetrics.io/): `npm install pm2 -g`
+- Install dependencies and start server: `npm run create:api`
+- Watch Logs: `pm2 logs api`
 
 ### Production Deployment
 
@@ -36,7 +36,7 @@
 ## Environment Configuration
 
 Integrated Configuration Module so you can just inject `ConfigService`
-and read all environment variables using 'getEnv(name)' function from `.env`, `config/env/development.env` or `config/env/production.env`.
+and read all environment variables using 'getEnv(key)' function from `.env`, `config/env/development.env` or `config/env/production.env`.
 
 ## Mongoose ODM integrated
 
@@ -107,4 +107,4 @@ Visit [NestJS](https://docs.nestjs.com/) Documentation Page for more information
 
 ## Description
 
-[NestJS](https://github.com/nestjs/nest) Boilerplate made with ❤️ by [Serge Harb](https://sergeharb.com).
+[NestJS](https://github.com/nestjs/nest) Boilerplate crafted with ❤️ by [Serge Harb](https://sergeharb.com).
