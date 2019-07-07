@@ -1,9 +1,13 @@
+import "reflect-metadata";
+
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { PassportModule } from '@nestjs/passport';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 import { AllExceptionsFilter } from '@core/utils/exceptions.filter';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { ValidationPipe } from '@nestjs/common';
 
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
@@ -20,6 +24,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalPipes(new ValidationPipe());
 
   const K = 'Oops, Nothing Here :)';
   app.enable('trust proxy');
@@ -47,6 +52,15 @@ async function bootstrap() {
 
   // MORGAN LOGGER
   app.use(morgan('dev'));
+
+  const options = new DocumentBuilder()
+    .setTitle('My API')
+    .setDescription('API description')
+    .setVersion('1.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.PORT);
 }

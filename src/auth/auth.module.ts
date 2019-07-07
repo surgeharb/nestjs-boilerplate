@@ -11,7 +11,7 @@ import * as fs from 'fs';
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: `${fs.readFileSync('./config/keys/private.key')}`,
+      secret: `${fs.readFileSync('./config/keys/private.key').toString().replace(/\r?\n|\r/g, '')}`,
       // signOptions: { expiresIn: 3600 },
     }),
     UsersModule,

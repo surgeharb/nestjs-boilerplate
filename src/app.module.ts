@@ -16,6 +16,7 @@ const MongooseConfig = {
   inject: [ConfigService],
   useFactory: async (configService: ConfigService) => ({
     uri: configService.getEnv('MONGODB_URI'),
+    useFindAndModify: false,
     useNewUrlParser: true,
   }),
 };

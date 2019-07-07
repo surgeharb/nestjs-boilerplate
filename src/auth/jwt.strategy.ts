@@ -11,7 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: `${fs.readFileSync('./config/keys/private.key')}`,
+      secretOrKey: `${fs.readFileSync('./config/keys/private.key').toString().replace(/\r?\n|\r/g, '')}`,
     });
   }
 

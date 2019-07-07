@@ -3,8 +3,8 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { IJwtPayload } from './interfaces/jwt-payload.interface';
 import { IUser } from '../users/interfaces/user.interface';
-import { CreateUserDto } from '~src/users/dtos/create-user.dto';
-import { LoginUserDto } from '~src/users/dtos/login-user.dto';
+import { CreateUserDto } from '../users/dtos/create-user.dto';
+import { LoginUserDto } from '../users/dtos/login-user.dto';
 import { PasswordService } from '@core/services/password.service';
 import { ConfigService } from '@core/config/config.service';
 import to from 'await-to-js';
@@ -29,21 +29,31 @@ export class AuthService {
       throw { message: this.configService.translate('LOGIN_ERR', lang), status: HttpStatus.UNAUTHORIZED };
     }
 
-    return { user, token: this.signUserToken(user, user.tokenCode) };
+    const tokenCode = this.passwordService.generateRandomString(32); // tokenCode to invalidate jwt if needed
+    this.usersService.addTokenCode(user._id, tokenCode);
+
+    delete user.password; delete user.salt;
+    return { user, token: this.signUserToken(user, tokenCode, 'login') };
   }
 
   public async register(userDto: CreateUserDto, lang: string) {
-    const { salt, hash } = this.passwordService.hash(userDto.password);
-    const tokenCode = this.passwordService.generateRandomString(32); // tokenCode to invalidate token if needed
+    let error: any; let user: IUser;
 
-    const [error, user] = await to(this.usersService.create({ ...userDto, salt, password: hash }));
+    const { salt, hash } = this.passwordService.hash(userDto.password);
+    const tokenCode = this.passwordService.generateRandomString(32); // tokenCode to invalidate jwt if needed
+
+    [error, user] = await to(this.usersService.create({ ...userDto, salt, password: hash }));
 
     if (error || (error && error.code === 11000)) {
       throw { message: this.configService.translate('EMAIL_IN_USE', lang), status: HttpStatus.FORBIDDEN };
     }
 
-    await this.usersService.addTokenCode(user._id, tokenCode);
-    return { user, token: this.signUserToken(user, tokenCode) };
+    [user] = await Promise.all([
+      this.usersService.findById(user._id),
+      this.usersService.addTokenCode(user._id, tokenCode),
+    ]);
+
+    return { user, token: this.signUserToken(user, tokenCode, 'register') };
   }
 
   public async validateUser(payload: IJwtPayload): Promise<IUser> {
@@ -58,8 +68,8 @@ export class AuthService {
     return user;
   }
 
-  private signUserToken(user: IUser, tokenCode: string): string {
-    const payload: IJwtPayload = { id: user._id, email: user.email, tokenCode };
+  private signUserToken(user: IUser, tokenCode: string, iss = 'unknown'): string {
+    const payload: IJwtPayload = { iss, id: user._id, email: user.email, tokenCode };
     return this.jwtService.sign(payload);
   }
 }
