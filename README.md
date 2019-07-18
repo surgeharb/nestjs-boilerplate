@@ -58,11 +58,15 @@ endpoints.
 #### You must generate new the private/public key pair as they are used to sign the secure Json Web Tokens (JWTs) for Users' Authentication!
 
 ```bash
+# Navigate to config/keys where the default keys are stored
+# Then delete the default keys to generate your own keys
+$ cd config/keys && rm private.key && rm public.key
+
 # Generate Private Key
-$ openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
+$ openssl genpkey -algorithm RSA -out private.key -pkeyopt rsa_keygen_bits:2048
 
 # Extract Public Key from generated Private Key
-$ openssl rsa -pubout -in private_key.pem -out public_key.pem
+$ openssl rsa -pubout -in private.key -out public.key
 ```
 
 ## Protected Endpoints
