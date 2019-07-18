@@ -17,13 +17,15 @@
 
 - Create .env file `cp .env-sample.env .env` and set `NODE_ENV=development`
 - Install dependencies: `npm install`
-- Start the app `nodemon` (app will be exposed through the port 3000)
+- Make Sure you have a running mongod instance using `mongod`
+- Start the app using `nodemon` (app will run on port 3000 by default)
 - Feel free to change the port in config/env/development.env
 
 ### Production Build Run
 
 - Create .env file `echo NODE_ENV=production > .env`
 - Change the port number in config/env/production.env
+- Make Sure you have a running mongod instance using `mongod`
 - Install [PM2](http://pm2.keymetrics.io/): `npm install pm2 -g`
 - Install dependencies and start server: `npm run create:api`
 - Watch Logs: `pm2 logs api`
