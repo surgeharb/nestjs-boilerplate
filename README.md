@@ -33,7 +33,9 @@
 ### Production Deployment
 
 - Setup your custom server by following [these instructions](https://medium.com/@sergeharb.175/launching-mean-stack-server-with-nginx-rehl-2d8d584990c3)
-- `cd /path/to/project/root` then `npm restart`
+- `cd /path/to/project/root` then [Build your Production Code](#production-build-run)
+- Deploy your new changes then apply them using `npm restart`
+- Your API server will now run like charm!
 
 ## Environment Configuration
 
