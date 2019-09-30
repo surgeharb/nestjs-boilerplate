@@ -42,6 +42,12 @@
 Integrated Configuration Module so you can just inject `ConfigService`
 and read all environment variables using 'getEnv(key)' function from `.env`, `config/env/development.env` or `config/env/production.env`.
 
+## Additional CLI PowerUps
+```bash
+node ./scripts/generate schema products # generates products mongoose schema
+node ./scripts/generate interface products # generates products document interface
+```
+
 ## Mongoose ODM integrated
 
 [Mongoose](https://mongoosejs.com/) gives you possibility to use mongoDB.
