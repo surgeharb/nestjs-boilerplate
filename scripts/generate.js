@@ -3,13 +3,15 @@ const { join } = require('path');
 
 const TYPE = (process.argv[2] || '').toLowerCase();
 const NAME = (process.argv[3] || '').toLowerCase();
+const OPTION = (process.argv[4] || '').toLowerCase();
+const MODULE = (process.argv[5] || '').toLowerCase();
 
 const TYPES = ['schema', 'interface'];
-const USAGE = 'Usage: "node generate [schema|interface] [name]"'
+const USAGE = 'Usage: node generate [schema|interface] [name]';
 
-const generate = (name, type) => {
+const generate = (name, type, moduleName) => {
   const basePath = join(__dirname, '../src');
-  const modulePath = join(basePath, name);
+  const modulePath = join(basePath, moduleName || name);
   const dirPath = join(modulePath, `${type}s`);
 
   if (!fs.existsSync(basePath)) {
@@ -43,8 +45,10 @@ const generate = (name, type) => {
 
 if (!TYPE || !NAME || !TYPES.includes(TYPE)) {
   console.error(USAGE);
+} else if (OPTION && (OPTION !== '--module' || !MODULE)) {
+  console.error(USAGE + ' --module [module]');
 } else {
-  generate(NAME, TYPE);
+  generate(NAME, TYPE, MODULE || undefined);
 }
 
 return process.exit(1);

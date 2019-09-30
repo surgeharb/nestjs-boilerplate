@@ -46,6 +46,7 @@ and read all environment variables using 'getEnv(key)' function from `.env`, `co
 ```bash
 node ./scripts/generate schema products # generates products mongoose schema
 node ./scripts/generate interface products # generates products document interface
+node ./scripts/generate schema schedule --module users # add schema to other module
 ```
 
 ## Mongoose ODM integrated
