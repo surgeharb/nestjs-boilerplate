@@ -16,8 +16,10 @@ const MongooseConfig = {
   inject: [ConfigService],
   useFactory: async (configService: ConfigService) => ({
     uri: configService.getEnv('MONGODB_URI'),
+    useUnifiedTopology: true,
     useFindAndModify: false,
     useNewUrlParser: true,
+    useCreateIndex: true,
   }),
 };
 
@@ -35,4 +37,4 @@ const MongooseConfig = {
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
