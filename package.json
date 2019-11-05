@@ -40,7 +40,7 @@
     "ddos": "^0.2.1",
     "dotenv": "^8.1.0",
     "helmet": "^3.21.1",
-    "mongoose": "^5.7.1",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "nest-router": "^1.0.9",
     "nest-schedule": "^0.6.3",
