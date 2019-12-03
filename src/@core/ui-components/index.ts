@@ -1,7 +1,7 @@
 import { IComponent } from './_base.component';
 
 export interface IMapResponse {
-  readonly extraData: any;
+  readonly extraData: { [key: string]: any };
   readonly components: IComponent[];
 }
 
