@@ -10,15 +10,11 @@ export const MULTER_CONFIG = {
 
     const randomNumber = xhelper.leadingZeroes(`${Math.round(Math.random() * 100)}`, 3);
     const mimetype = file.mimetype.split('/');
-    const { user, community } = req.preFetched;
+
     const type = mimetype[0];
-    let ext = '';
+    const ext = `.${mimetype[1]}`;
 
-    if (type === 'video') {
-      ext = `.${mimetype[1]}`;
-    }
-
-    const filename = `${randomNumber}${(user || community)._id}${Date.now()}`.toUpperCase() + ext;
+    const filename = `${randomNumber}${Date.now()}`.toLowerCase() + ext;
     cb(null, filename);
   },
 };
