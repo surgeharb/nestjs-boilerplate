@@ -10,6 +10,7 @@ import { UploadModule } from './upload/upload.module';
 import { CoreModule } from '@core/core.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { PostsModule } from './posts/posts.module';
 
 const MongooseConfig = {
   imports: [ConfigModule],
@@ -33,6 +34,8 @@ const MongooseConfig = {
     AuthModule,
 
     UsersModule,
+
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
